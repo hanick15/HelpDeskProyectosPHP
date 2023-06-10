@@ -23,7 +23,7 @@
                         </a>
 
                     <li class="blue-dirty">
-                        <a href="../home/">
+                        <a href="../MntPerfil/">
                             <span class="glyphicon glyphicon-th"></span>
                             <span class="lbl">Mi Perfil</span>
                         </a>
@@ -67,7 +67,7 @@
                     </li>
 
                     <li class="blue-dirty">
-                        <a href="../home/">
+                        <a href="../MntPerfil/">
                             <span class="glyphicon glyphicon-th"></span>
                             <span class="lbl">Mi Perfil</span>
                         </a>

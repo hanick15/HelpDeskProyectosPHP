@@ -61,6 +61,10 @@
                 echo json_encode($output);
             }   
         break;
+        
+        case "password": //Actualizar contraseña
+            $usuario->update_usuario_pass($_POST["usu_id"],$_POST["usu_pass"]);
+        break;
 
     }
 ?>

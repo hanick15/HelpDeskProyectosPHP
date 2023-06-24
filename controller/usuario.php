@@ -66,5 +66,56 @@
             $usuario->update_usuario_pass($_POST["usu_id"],$_POST["usu_pass"]);
         break;
 
+        case "total";
+            $datos=$usuario->get_usuario_total_x_id($_POST["usu_id"]);  
+            if(is_array($datos)==true and count($datos)>0){
+                foreach($datos as $row)
+                {
+                    $output["TOTAL"] = $row["TOTAL"];
+                }
+                echo json_encode($output);
+            }
+            break;
+
+        case "totalabierto";
+            $datos=$usuario->get_usuario_totalabierto_x_id($_POST["usu_id"]);  
+            if(is_array($datos)==true and count($datos)>0){
+                foreach($datos as $row)
+                {
+                    $output["TOTAL"] = $row["TOTAL"];
+                }
+                echo json_encode($output);
+            }
+            break;
+
+        case "totalcerrado";
+            $datos=$usuario->get_usuario_totalcerrado_x_id($_POST["usu_id"]);  
+            if(is_array($datos)==true and count($datos)>0){
+                foreach($datos as $row)
+                {
+                    $output["TOTAL"] = $row["TOTAL"];
+                }
+                echo json_encode($output);
+            }
+            break;
+
+        case "grafico";
+            $datos=$usuario->get_usuario_grafico($_POST["usu_id"]);  
+            echo json_encode($datos);
+        break;
+
+        case "combo";
+            $datos = $usuario->get_usuario_x_rol();
+            if(is_array($datos)==true and count($datos)>0){
+                $html.= "<option label='Seleccionar'></option>";
+                foreach($datos as $row)
+                {
+                    $html.= "<option value='".$row['usu_id']."'>".$row['usu_nom']."</option>";
+                }
+                echo $html;
+            }
+        break;
+        
+
     }
 ?>

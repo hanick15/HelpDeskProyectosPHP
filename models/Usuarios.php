@@ -110,6 +110,62 @@
             return $resultado=$sql->fetchAll();
         }
 
+        public function get_usuario_total_x_id($usu_id){
+            $conectar= parent::conexion();
+            parent::set_names();
+            $sql="SELECT COUNT(*) as TOTAL FROM ticket where usu_id = ?";
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1, $usu_id);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+
+        public function get_usuario_totalabierto_x_id($usu_id){
+            $conectar= parent::conexion();
+            parent::set_names();
+            $sql="SELECT COUNT(*) as TOTAL FROM ticket where usu_id = ? and tick_estado='Abierto'";
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1, $usu_id);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+
+        public function get_usuario_totalcerrado_x_id($usu_id){
+            $conectar= parent::conexion();
+            parent::set_names();
+            $sql="SELECT COUNT(*) as TOTAL FROM ticket where usu_id = ? and tick_estado='Cerrado'";
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1, $usu_id);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+
+        public function get_usuario_grafico($usu_id){
+            $conectar= parent::conexion();
+            parent::set_names();
+            $sql="SELECT categoria.cat_nom as nom,COUNT(*) AS total
+                FROM   ticket  JOIN  
+                    categoria ON ticket.cat_id = categoria.cat_id  
+                WHERE    
+                ticket.est = 1
+                and ticket.usu_id = ?
+                GROUP BY 
+                categoria.cat_nom 
+                ORDER BY total DESC";
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1, $usu_id);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+        
+        public function get_usuario_x_rol(){
+            $conectar= parent::conexion();
+            parent::set_names();
+            $sql="SELECT * FROM usuario where rol_id=1";
+            $sql=$conectar->prepare($sql);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
     }
 
 ?>

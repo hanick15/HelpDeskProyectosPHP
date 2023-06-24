@@ -5,7 +5,7 @@
         $conectar = parent::conexion();
         parent::set_names();
 
-        $sql="INSERT INTO ticket (tick_id, usu_id, cat_id, tick_titulo, tick_descrip, tick_estado, fech_crea, est) VALUES (NULL,?,?,?,?,'Abierto',now(),'1');";
+        $sql="INSERT INTO ticket (tick_id, usu_id, cat_id, tick_titulo, tick_descrip, tick_estado, fech_crea, usu_asig, fech_asig, est) VALUES (NULL,?,?,?,?,'Abierto',now(),NULL,NULL,'1');";
         $sql=$conectar->prepare($sql);
 
         $sql->bindValue(1, $usu_id);
@@ -28,6 +28,8 @@
             ticket.tick_descrip,
             ticket.tick_estado,
             ticket.fech_crea,
+            ticket.usu_asig,
+            ticket.fech_asig,
             usuario.usu_nom,
             usuario.usu_ape,
             categoria.cat_nom
@@ -56,6 +58,8 @@
             ticket.tick_descrip,
             ticket.tick_estado,
             ticket.fech_crea,
+            ticket.usu_asig,
+            ticket.fech_asig,
             usuario.usu_nom,
             usuario.usu_ape,
             categoria.cat_nom
@@ -157,6 +161,65 @@
                 tick_id = ?";
         $sql=$conectar->prepare($sql);
         $sql->bindValue(1, $tick_id);
+        $sql->execute();
+        return $resultado=$sql->fetchAll();
+    }
+
+    public function update_ticket_asignacion($tick_id,$usu_asig){
+        $conectar= parent::conexion();
+        parent::set_names();
+        $sql="update ticket 
+            set	
+                usu_asig = ?,
+                fech_asig = now()
+            where
+                tick_id = ?";
+        $sql=$conectar->prepare($sql);
+        $sql->bindValue(1, $usu_asig);
+        $sql->bindValue(2, $tick_id);
+        $sql->execute();
+        return $resultado=$sql->fetchAll();
+    }
+
+    public function get_ticket_total(){
+        $conectar= parent::conexion();
+        parent::set_names();
+        $sql="SELECT COUNT(*) as TOTAL FROM ticket";
+        $sql=$conectar->prepare($sql);
+        $sql->execute();
+        return $resultado=$sql->fetchAll();
+    }
+
+    public function get_ticket_totalabierto(){
+        $conectar= parent::conexion();
+        parent::set_names();
+        $sql="SELECT COUNT(*) as TOTAL FROM ticket where tick_estado='Abierto'";
+        $sql=$conectar->prepare($sql);
+        $sql->execute();
+        return $resultado=$sql->fetchAll();
+    }
+
+    public function get_ticket_totalcerrado(){
+        $conectar= parent::conexion();
+        parent::set_names();
+        $sql="SELECT COUNT(*) as TOTAL FROM ticket where tick_estado='Cerrado'";
+        $sql=$conectar->prepare($sql);
+        $sql->execute();
+        return $resultado=$sql->fetchAll();
+    }
+
+    public function get_ticket_grafico(){
+        $conectar= parent::conexion();
+        parent::set_names();
+        $sql="SELECT categoria.cat_nom as nom,COUNT(*) AS total
+            FROM   ticket  JOIN  
+                categoria ON ticket.cat_id = categoria.cat_id  
+            WHERE    
+            ticket.est = 1
+            GROUP BY 
+            categoria.cat_nom 
+            ORDER BY total DESC";
+        $sql=$conectar->prepare($sql);
         $sql->execute();
         return $resultado=$sql->fetchAll();
     }

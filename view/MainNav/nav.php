@@ -67,6 +67,13 @@
                     </li>
 
                     <li class="blue-dirty">
+                        <a href="..\MntCategoria\">
+                            <span class="glyphicon glyphicon-th"></span>
+                            <span class="lbl">Mant. Categoria</span>
+                        </a>
+                    </li>
+
+                    <li class="blue-dirty">
                         <a href="../MntPerfil/">
                             <span class="glyphicon glyphicon-th"></span>
                             <span class="lbl">Mi Perfil</span>

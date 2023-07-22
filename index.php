@@ -92,7 +92,7 @@
                             
                         </div>
                         <div class="float-right reset">
-                            <a href="reset-password.html">Cambiar Contraseña</a>
+                            <a href="reset-password.html"></a>
                         </div>
                         <div class="float-left reset">
                             <a href="#" id="btnadmin">Acceso Admin</a>
